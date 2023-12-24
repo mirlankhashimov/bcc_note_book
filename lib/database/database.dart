@@ -6,10 +6,21 @@ import 'package:uuid/uuid.dart';
 
 import '../ui/note.dart';
 
-class NoteDatabase {
+abstract class NoteDatabase {
+  Future<List<Note>> getNotes();
+
+  Future<void> addNote(Note note);
+
+  Future<void> deleteNote(String key);
+
+  Future<bool> updateNote(Note note);
+}
+
+class NoteDatabaseImpl extends NoteDatabase {
   final _uuid = const Uuid();
 
   //get all data from the box
+  @override
   Future<List<Note>> getNotes() async {
     final List<Note> notes = [];
     final prefs = await SharedPreferences.getInstance();
@@ -22,6 +33,7 @@ class NoteDatabase {
   }
 
   //add data to the box
+  @override
   Future<void> addNote(Note note) async {
     final noteKey = _uuid.v4();
     final prefs = await SharedPreferences.getInstance();
@@ -31,12 +43,14 @@ class NoteDatabase {
   }
 
   //delete data from the box
+  @override
   Future<void> deleteNote(String key) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(key);
   }
 
   //update data from the box
+  @override
   Future<bool> updateNote(Note note) async {
     final prefs = await SharedPreferences.getInstance();
     return await prefs.setString(note.id, jsonEncode(note.toJson()));

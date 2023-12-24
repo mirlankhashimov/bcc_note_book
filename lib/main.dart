@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
+import 'di/injection.dart';
 import 'note_bloc/note_bloc.dart';
 import 'ui/home_screen.dart';
 
+final getIt = GetIt.instance;
+
 void main() async {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -25,7 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

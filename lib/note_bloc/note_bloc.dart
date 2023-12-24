@@ -1,3 +1,4 @@
+import 'package:bcc_note_book/di/injection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -9,7 +10,8 @@ part 'note_event.dart';
 part 'note_state.dart';
 
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
-  final NoteDatabase noteDatabase = NoteDatabase();
+
+  final NoteDatabase noteDatabase = locator<NoteDatabase>();
 
   NoteBloc() : super(NoteInitial()) {
     on<InitialEvent>((event, emit) async {
