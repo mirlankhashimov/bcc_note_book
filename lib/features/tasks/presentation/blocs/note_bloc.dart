@@ -1,16 +1,17 @@
 import 'package:bcc_note_book/di/injection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-
-import '../ui/note.dart';
-import '../database/database.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../dvo/note.dart';
+import '../../../../database/database.dart';
 
 part 'note_event.dart';
+
 part 'note_state.dart';
 
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
-
   final NoteDatabase noteDatabase = locator<NoteDatabase>();
 
   NoteBloc() : super(NoteInitial()) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../note_bloc/note_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../blocs/note_bloc.dart';
 import 'note_item.dart';
 
 class Notes extends StatelessWidget {
@@ -22,15 +22,15 @@ class Notes extends StatelessWidget {
             },
           );
         } else {
-          return const Center(
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Text(
-                      'Hello, add your first note!',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.add_first_note,
+                      style: const TextStyle(
                           fontSize: 24,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold,

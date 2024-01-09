@@ -1,8 +1,10 @@
-import 'package:bcc_note_book/ui/note.dart';
+import 'package:bcc_note_book/features/tasks/presentation/blocs/settings/locale_bloc.dart';
+import 'package:bcc_note_book/features/tasks/presentation/dvo/note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../note_bloc/note_bloc.dart';
-import 'note_list.dart';
+import '../blocs/note_bloc.dart';
+import '../widgets/note_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,20 +26,43 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Bcc third home work"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Add Note',
-            onPressed: () {
-              addNoteDialog();
-            },
-          ),
-        ],
-      ),
-      body: const Notes(),
-    );
+        appBar: AppBar(
+          title: const Text("Bcc"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                addNoteDialog();
+              },
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  final LocaleBloc localeBloc =
+                      BlocProvider.of<LocaleBloc>(context);
+                  localeBloc.add(ChangeLangEvent(lang: 'ru'));
+                },
+                label: Text(AppLocalizations.of(context)?.localeName ?? "ru"),
+                icon: const Icon(Icons.language_outlined))
+          ],
+        ),
+        body: BlocListener(
+          bloc: BlocProvider.of<LocaleBloc>(context),
+          listener: (BuildContext context, LocaleState state) {
+            if (state is ChangedLangState) {
+              final snackBar = SnackBar(
+                content: const Text(""),
+                action: SnackBarAction(
+                  label: AppLocalizations.of(context)!.lang_changed(state.lang),
+                  onPressed: () {
+                    // Some code to undo the change.
+                  },
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          },
+          child: const Notes(),
+        ));
   }
 
   void addNoteDialog() {
@@ -70,10 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: titleController,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Type the title',
-                            labelText: 'Note Title'),
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            hintText: AppLocalizations.of(context)!.type_title,
+                            labelText:
+                                AppLocalizations.of(context)!.note_title),
                       ),
                     ),
                     Container(
@@ -92,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                         ),
-                        child: const Text("Add"),
+                        child: Text(AppLocalizations.of(context)!.add_note),
                       ),
                     ),
                   ],

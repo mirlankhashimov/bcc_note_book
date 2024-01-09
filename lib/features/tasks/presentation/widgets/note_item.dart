@@ -1,10 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../note_bloc/note_bloc.dart';
-import 'note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../blocs/note_bloc.dart';
+import '../dvo/note.dart';
 
 class NoteItem extends StatelessWidget {
   final Note note;
@@ -82,10 +81,11 @@ class NoteItem extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: titleController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Type the title',
-                            labelText: "Note Title"),
+                            hintText: AppLocalizations.of(context)!.type_title,
+                            labelText:
+                                AppLocalizations.of(context)!.note_title),
                       ),
                     ),
                     Container(
@@ -104,7 +104,7 @@ class NoteItem extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                         ),
-                        child: const Text("Update"),
+                        child: Text(AppLocalizations.of(context)!.update),
                       ),
                     ),
                   ],

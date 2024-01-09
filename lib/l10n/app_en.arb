@@ -1,0 +1,8 @@
+{
+  "add_note": "Add Note",
+  "type_title": "Type the title",
+  "note_title": "Note Title",
+  "update": "Update",
+  "add_first_note": "Hello, add your first note!",
+  "lang_changed": "Language Changed {lang}"
+}

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-import '../ui/note.dart';
+import '../features/tasks/presentation/dvo/note.dart';
 
 abstract class NoteDatabase {
   Future<List<Note>> getNotes();
