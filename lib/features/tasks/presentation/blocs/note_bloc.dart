@@ -1,4 +1,6 @@
 import 'package:bcc_note_book/di/injection.dart';
+import 'package:bcc_note_book/features/tasks/data/repositories/post_repository.dart';
+import 'package:bcc_note_book/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,14 +18,22 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
   NoteBloc() : super(NoteInitial()) {
     on<InitialEvent>((event, emit) async {
-      final notes = await noteDatabase.getNotes();
-      emit(NotesLoaded(notes: notes));
+      //final notes = await noteDatabase.getNotes();
+      final posts = await getIt<PostRepository>().getPostsData();
+      final mappedPosts = posts
+          .map((post) => Note(post.id.toString(), post.title ?? ""))
+          .toList();
+      emit(NotesLoaded(notes: mappedPosts));
     });
 
     on<AddNoteEvent>((event, emit) async {
-      await noteDatabase.addNote(event.note);
-      final notes = await noteDatabase.getNotes();
-      emit(NotesLoaded(notes: notes));
+      //await noteDatabase.addNote(event.note);
+      await getIt<PostRepository>().addPost(event.note);
+      final posts = await getIt<PostRepository>().getPostsData();
+      final mappedNotes = posts
+          .map((post) => Note(post.id.toString(), post.title ?? ""))
+          .toList();
+      emit(NotesLoaded(notes: mappedNotes));
     });
 
     on<DeleteNoteEvent>((event, emit) async {

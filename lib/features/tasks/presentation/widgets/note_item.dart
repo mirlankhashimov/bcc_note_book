@@ -14,7 +14,7 @@ class NoteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final NoteBloc noteBloc = BlocProvider.of<NoteBloc>(context);
     return Card(
-      margin: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(4.0),
       child: Row(
         children: [
           Flexible(

@@ -15,6 +15,7 @@ class Notes extends StatelessWidget {
         if (state is NotesLoaded && state.notes.isNotEmpty) {
           return ListView.builder(
             scrollDirection: Axis.vertical,
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: state.notes.length,
             itemBuilder: (context, index) {

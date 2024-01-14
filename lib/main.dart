@@ -1,3 +1,4 @@
+import 'package:bcc_note_book/features/tasks/data/repositories/post_repository.dart';
 import 'package:bcc_note_book/features/tasks/presentation/blocs/settings/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,8 @@ final getIt = GetIt.instance;
 void main() async {
   configureDependencies();
   await Hive.initFlutter();
+
+  getIt.registerSingleton<PostRepository>(PostRepositoryImpl());
   runApp(const MyApp());
 }
 
